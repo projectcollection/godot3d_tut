@@ -1,10 +1,85 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhb4hmg6vngm7"]
+[gd_scene load_steps=6 format=3 uid="uid://dhb4hmg6vngm7"]
 
 [ext_resource type="Script" path="res://mob.gd" id="1_m0vcw"]
 [ext_resource type="PackedScene" uid="uid://wlm4732uqj18" path="res://art/mob.glb" id="2_btaud"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_safh0"]
 size = Vector3(1, 0.921779, 1.99996)
+
+[sub_resource type="Animation" id="Animation_snac5"]
+resource_name = "float"
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Character:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.2, 0.5, 1.2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Character:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.65, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.2, 0.7, 1.2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Character:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.2, 0.5, 1.2)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Character:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.139626, -0.25, 0, 0.25, 0, -0.15708, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.1, 0.5, 1.2)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivot/Character:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.1, 0.5, 1.2)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Pivot/Character:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.1, 0.5, 1.2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yovjb"]
+_data = {
+"float": SubResource("Animation_snac5")
+}
 
 [node name="Mob" type="CharacterBody3D" groups=["mob"]]
 collision_layer = 2
@@ -15,6 +90,7 @@ script = ExtResource("1_m0vcw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44674, 0)
 
 [node name="Character" parent="Pivot" instance=ExtResource("2_btaud")]
+transform = Transform3D(1, 0, 0, 0, 0.994949, 0.100378, 0, -0.100378, 0.994949, 0, 0.200763, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.583087, 0)
@@ -23,5 +99,11 @@ shape = SubResource("BoxShape3D_safh0")
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628948, 0.364729)
 aabb = AABB(-1, -0.434185, -1.64587, 2, 0.868369, 3.21459)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "float"
+libraries = {
+"": SubResource("AnimationLibrary_yovjb")
+}
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]
